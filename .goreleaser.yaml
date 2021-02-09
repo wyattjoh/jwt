@@ -1,0 +1,37 @@
+project_name: jwt
+
+builds:
+  - binary: jwt
+    goos:
+      - windows
+      - darwin
+      - linux
+    goarch:
+      - amd64
+
+brews:
+  - tap:
+      owner: wyattjoh
+      name: homebrew-stable
+    folder: Formula
+    homepage: https://github.com/wyattjoh/jwt
+    description: JWT Inspector
+    test: |
+      system "#{bin}/jwt -v"
+    install: |
+      bin.install "jwt"
+
+archives:
+  - name_template: "{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - LICENSE.md
+      - README.md
+
+release:
+  github:
+    owner: wyattjoh
+    name: jwt
